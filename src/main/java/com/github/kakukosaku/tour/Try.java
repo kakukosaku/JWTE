@@ -1,4 +1,4 @@
-package com.github.kakukosaku.com.github.kakukosaku.tour;
+package com.github.kakukosaku.tour;
 
 import java.util.ArrayList;
 import java.util.List;
