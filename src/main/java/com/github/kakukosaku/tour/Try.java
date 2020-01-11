@@ -1,21 +1,38 @@
 package com.github.kakukosaku.tour;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Try {
 
-    public static void main(String[] args) {
-        List<String> list = new ArrayList<String>();
-        list.add("1");
-        list.add("2");
-        for (String item : list) {
-            if ("2".equals(item)) {
-                list.remove(item);
-            }
-        }
+    private int n;
 
-        System.out.println(list);
+    protected Try(int n) {
+        this.n = n;
+    }
+
+    class InstanceInnerClass{}
+
+    static class StaticInnerClass{}
+
+    private static void func() {
+    }
+
+    public static void main(String[] args) {
+        (new Thread(){}).start();
+        (new Thread(){}).start();
+
+        System.out.println(3 % -2);
+        Try.func();
+
+        class MethodClass1{};
+        class MethodClass2{};
+    }
+
+}
+
+
+class Son extends Try {
+
+    protected Son(int n) {
+        super(n);
     }
 
 }
