@@ -4,7 +4,7 @@ package com.github.kakukosaku.grammar;
  * Description
  *
  * @author kaku
- * @version 1.0.0
+ * @date 2020-01-12
  */
 public class StaticCodes {
 

@@ -2,6 +2,12 @@ package com.github.kakukosaku.datatype;
 
 import com.github.kakukosaku.util.Display;
 
+/**
+ * Description
+ *
+ * @author kaku
+ * @date 2020-01-12
+ */
 public class DataType<T> {
 
     T t;

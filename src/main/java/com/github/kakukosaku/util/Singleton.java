@@ -6,7 +6,7 @@ import java.io.Serializable;
  * 实现了序列化接口的单化模式
  *
  * @author kaku
- * @version 1.0.0
+ * @date 2020-01-12
  */
 public class Singleton implements Serializable {
 

@@ -1,5 +1,11 @@
 package com.github.kakukosaku.util;
 
+/**
+ * Description
+ *
+ * @author kaku
+ * @date 2020-01-12
+ */
 public class Display {
 
     private Display() {

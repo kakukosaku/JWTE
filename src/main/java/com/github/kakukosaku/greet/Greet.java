@@ -1,5 +1,11 @@
 package com.github.kakukosaku.greet;
 
+/**
+ * Description
+ *
+ * @author kaku
+ * @date 2020-01-12
+ */
 public class Greet {
 
     /**

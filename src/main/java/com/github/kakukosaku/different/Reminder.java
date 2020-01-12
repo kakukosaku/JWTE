@@ -12,7 +12,6 @@ package com.github.kakukosaku.different;
  * 求余: 向0方向舍入
  *
  * @author kaku
- * @version 1.0.0
  * @date 2020-01-12
  */
 public class Reminder {
