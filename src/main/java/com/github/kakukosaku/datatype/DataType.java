@@ -13,7 +13,7 @@ public class DataType<T> {
         Integer i2 = -2;
         // int[] intArray = {1, 2, 3, 4, 5};
         // int[] intArray = new int[]{1, 2, 3, 4, 5};
-        int[] intArray = new int[5];
+        Integer[] intArray = new Integer[5];
         Display.displayArray(intArray);
 
         // init array
@@ -28,7 +28,7 @@ public class DataType<T> {
 
         // character & array of char
         char c = 'a';
-        char[] charArray = {c, 'b'};
+        Character[] charArray = {c, 'b'};
         Display.displayArray(charArray);
 
         // generic type

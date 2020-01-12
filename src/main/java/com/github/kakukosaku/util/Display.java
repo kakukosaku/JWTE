@@ -5,19 +5,10 @@ public class Display {
     private Display() {
     }
 
-    public static void displayArray(int[] array) {
+    public static <E> void displayArray(E[] array) {
         System.out.println("Display Array:");
         System.out.print("\t[ ");
-        for (int i : array) {
-            System.out.print(i + " ");
-        }
-        System.out.print("]\n");
-    }
-
-    public static void displayArray(char[] array) {
-        System.out.println("Display Array:");
-        System.out.print("\t[ ");
-        for (char i : array) {
+        for (E i : array) {
             System.out.print(i + " ");
         }
         System.out.print("]\n");
