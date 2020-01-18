@@ -8,6 +8,15 @@
     <artifactId>JWTE</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <!--  dependencies  -->
+    <dependencies>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.0.13</version>
+        </dependency>
+    </dependencies>
+
     <!-- java byte codes version  -->
     <build>
         <plugins>
