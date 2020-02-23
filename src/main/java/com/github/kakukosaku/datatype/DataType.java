@@ -2,6 +2,8 @@ package com.github.kakukosaku.datatype;
 
 import com.github.kakukosaku.util.Display;
 
+import java.util.HashMap;
+
 /**
  * Description
  *
@@ -31,6 +33,11 @@ public class DataType<T> {
         }
         Display.displayArray(intArray);
 
+        // hash map
+        HashMap<String, Integer> m = new HashMap <>();
+        m.put("kaku", 18);
+        m.put("gjs", 27);
+        System.out.println(m);
 
         // character & array of char
         char c = 'a';
