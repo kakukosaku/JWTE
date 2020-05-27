@@ -17,7 +17,7 @@ package com.github.kakukosaku.different;
 public class Reminder {
 
     public static void main(String[] args) {
-        // % -> 取余
+        // 在c/c++, java中 %:取余, 而 python中 %: 取模
         int i = -3 % 2;
         System.out.println(i);
 
