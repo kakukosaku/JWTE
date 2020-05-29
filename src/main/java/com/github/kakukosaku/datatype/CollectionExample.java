@@ -1,8 +1,7 @@
 package com.github.kakukosaku.datatype;
 
-import ch.qos.logback.core.ContextBase;
-
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Description
@@ -32,7 +31,51 @@ public class CollectionExample extends CollectionExampleBase {
         System.out.print("\b\b]\n");
     }
 
-    public static void collectionAndGenericType() {
+    public static void mapExample() {
+        // HashMap, k,v nullable
+        Map<String, Integer> m = new HashMap<>();
+        m.put("kaku", 18);
+        m.put("gjs", 27);
+        Set<String> mKeys = m.keySet();
+        System.out.println(m);
+
+        mKeys.clear();
+        System.out.println(m);
+
+        m.put("kaku", 18);
+        m.put("gjs", 27);
+        // duplicate element, nullable k,v
+        ((HashMap<String, Integer>) m).put(null, null);
+        m.put("kaku", 19);
+        System.out.println(m.get("no-exist-key"));
+        System.out.println(m.containsKey("no-exist-key"));
+
+        System.out.println(m);
+        Collection<Integer> mValues = m.values();
+
+        mValues.remove(null);
+        System.out.println(m);
+
+        // TreeMap, k not nullable, v nullable
+        Map<String, Integer> m2 = new TreeMap<>();
+        m2.putAll(m);
+        m2.put("one", 1);
+        m2.put("two", 2);
+        m2.put("three", 3);
+        System.out.println(m2);
+        for (var i : m2.keySet()) {
+            System.out.print(i + " ");
+            System.out.println(m2.get(i));
+        }
+
+        // ConcurrentHasMap k,v not nullable
+        Map<String, Integer> m3 = new ConcurrentHashMap<>(m2);
+        System.out.println(m3);
+
+        // HashTable deprecated, k,v not nullable
+    }
+
+    public static void listAndGenericType() {
         // 完全没有类型限制和赋值限定
         List a1 = new ArrayList();
         a1.add(new Object());
@@ -138,11 +181,14 @@ public class CollectionExample extends CollectionExampleBase {
     }
 
     public static void main(String[] args) {
-        // List, ArrayList
+        // Array, List
         arrayListExample();
 
-        // Collections & Generic Type
-        collectionAndGenericType();
+        // List & Generic Type
+        listAndGenericType();
+
+        // Map
+        mapExample();
     }
 
 }
