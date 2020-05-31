@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.kakukosaku.mybatis.mapper.PersonMapper">
+    <select id="selectPersonById" resultType="Person" parameterType="int">
+        select * from person where id = #{id}
+    </select>
+
+    <resultMap id="personMap" type="Person">
+        <id property="id" column="id" />
+        <result property="name" column="name"/>
+        <result property="age" column="age"/>
+        <result property="sex" column="sex"/>
+        <association
+                property="idCard"
+                column="cid"
+                select="com.github.kakukosaku.mybatis.mapper.IdCardMapper.selectIdCardById"
+                javaType="IdCard"
+        />
+    </resultMap>
+</mapper>
