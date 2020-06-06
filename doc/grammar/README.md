@@ -1,6 +1,13 @@
 # Java Grammar Related Concepts
 
-1. Access Modifiers
+## Overview:
+
+- [Access Modifiers](#Access-Modifiers)
+- [Servlet & Servlet Container](#Servlet-&-Servlet-Container)
+- [Java Bean](#Java-Bean)
+- [Glossary](#Glossary)
+
+### Access Modifiers
 
 | Class Relationship | private | default(can be omitted) | protect | public |
 |--------------------|---------|-------------------------|---------|--------|
@@ -19,3 +26,73 @@ default +允许包内访问;
 protect +包外子类访问;
 
 public 都能访问.
+
+### Servlet & Servlet Container
+
+Ref: https://docs.oracle.com/javaee/5/tutorial/doc/bnafe.html
+
+> A servlet is a Java programming language class that is used to extend the capabilities of servers that host applications accessed by means of a request-response programming model.
+> Although servlets can respond to any type of request, they are commonly used to extend the applications hosted by web servers. For such applications, Java Servlet technology defines HTTP-specific servlet classes.
+
+一般来说, servlet 是指Java中用于代替 CGI(Common Gateway Interface) 程序, 提供高性能的web application 的一套规范(或Interface). (不仅仅用于HTTP-Base的web server)
+
+就 Servlet Interface 而言, 它定义了如何 5 个方法:
+
+init, service, destroy, getServletInfo, getServletConfig
+
+工作流程一般为:
+
+```
+if (servlet is requested for the first time) {
+    1. Servlet Container load servlet class
+    2. instantiates the servlet class.
+    3. calls the `init` method passing the ServletConfig object.
+}
+
+1. (或4) call `service` method passing with request and response object.
+```
+
+Servlet Container calls `destroy` method when it needs to remove the servlet such as at time of stopping server or un-deploy the project.
+
+> Servlet container, also known as Servlet engine is an integrated set of objects that provide run time environment for Java Servlet components.
+> In simple words, it is a system that manages Java Servlet components on top of the Web server to handle the Web client requests.
+
+如果你有其它`server side`语言经验(如Python), Servlet, Servlet Container, Spring Web framework的关系, 与Python中 WSGI规范 与 gunicorn容器 flask web framework的关系一样:
+
+1. Servlet(WSGI)规定handle server的规范
+2. Servlet Container(e.g. Tomcat) (gunicorn)专门处理web server request & response
+3. web framework 专门处理&提供web领域简单易用的封装, 提供 get/post etc. 更简单的interface供web开发使用, 降低耦合&降低开发成本.
+
+单就HTTP-Base的Servlet Container的工作流程一般为:
+
+```
+1. maps the request with the servlet in the web.xml file.
+2. creates request and response object for this request.
+3. calls the service method on the thread.
+4. The public service method internally calls the protected service method.
+5. The protected service method calls the doGet method depending on the type of request.
+6. The doGet method generates the response and it is passed to the client.
+7. After sending the response, the web container deletes the request and response objects. The thread is contained in the thread pool or deleted depends on the server implementation.
+```
+
+### Java Bean
+
+Ref: https://stackoverflow.com/questions/3295496/what-is-a-javabean-exactly
+
+javaBean 只是一个标准, 它满足:
+
+1. All properties private (use getters/setters)
+2. A public no-argument constructor
+3. Implements Serializable interface.
+
+That's it. It's just a convention. Lots of libraries depend on it though.
+
+### Glossary
+
+AOP: Aspect-Oriented Programming, AOP
+
+DAO: Data Access Object, DAO
+
+IOC: Inversion of Control, IOC
+
+JSR: Java Specification Requests, JSR
