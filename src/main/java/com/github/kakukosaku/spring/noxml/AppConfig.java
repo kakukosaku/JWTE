@@ -20,7 +20,10 @@ public class AppConfig {
     }
 
     public static void main(String[] args) {
-        ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
+        // ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+        ctx.register(AppConfig.class);
+        ctx.refresh();
         Hello hi = (Hello) ctx.getBean("getGreetTool");
         hi.greet();
     }
