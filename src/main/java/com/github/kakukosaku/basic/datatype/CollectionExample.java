@@ -12,6 +12,8 @@ import java.util.concurrent.ConcurrentHashMap;
 class CollectionExampleBase {
 }
 
+class CollectionExampleChild extends CollectionExample {
+}
 
 public class CollectionExample extends CollectionExampleBase {
 

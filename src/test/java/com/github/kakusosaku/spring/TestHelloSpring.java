@@ -1,9 +1,10 @@
 package com.github.kakusosaku.spring;
 
 import com.github.kakukosaku.spring.HelloSpring;
-import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.util.Arrays;
 
 /**
  * Description

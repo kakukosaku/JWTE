@@ -2,6 +2,7 @@ package com.github.kakukosaku.spring.aop;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -14,6 +15,7 @@ import java.util.List;
  * @author kaku
  * Date    2020/5/30
  */
+@RequestMapping
 public class AllLogAdvice {
 
     public void logBeforeAdvice(JoinPoint joinPoint) {
