@@ -58,3 +58,17 @@ The Spring Framework puts a strong emphasis on meaningful, current, and accurate
 - Integration: Remoting, JMS, JCA, JMX, Email, Tasks, Scheduling, Caching.
 
 - Languages: Kotlin, Groovy, Dynamic Languages.
+
+# Spring Boot
+
+Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can "just run".
+
+Ref: https://docs.spring.io/spring-boot/docs/2.3.1.RELEASE/reference/html/
+
+## Overview
+
+pass
+
+## Catalog
+
+

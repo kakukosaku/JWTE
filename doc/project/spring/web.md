@@ -9,10 +9,10 @@ Sprint MVC, View Technologies, CORS Support, WebSocket Support.
 ---
 
 - [Spring Web MVC](#spring-web-mvc)
-- REST Clients
-- Testing
-- WebSockets
-- Other Web Framework
+- [REST Clients](#rest-clients)
+- [Testing](#testing)
+- [WebSockets](#websockets)
+- [Other Web Framework](#other-web-frameworks)
 
 ### Spring Web MVC
 
@@ -525,23 +525,23 @@ public class MyConfig {
 }
 ```
 
-3. Handler Method
+**Handler Method**
 
 `@RequestMapping` handler methods have a flexible signature and can choose from a range of supported controller method arguments and return values.
 
-**Method Arguments**
+*Method Arguments*
 
 pass
 
-**Return Values**
+*Return Values*
 
 pass
 
-**Type Conversion**
+*Type Conversion*
 
 Some annotated controller method arguments that represent String-based request input (such as @RequestParam, @RequestHeader, @PathVariable, @MatrixVariable, and @CookieValue) can require type conversion if the argument is declared as something other than String
 
-**Matrix Variables**
+*Matrix Variables*
 
 name-value pairs in path segments, In Spring MVC, we refer to those as "Matrix Variables" based on an "old post" by Time Berners-Lee, they can be also be referred to as URI path parameters.
 
@@ -579,7 +579,7 @@ class T {
 
 需要配置相关启用: Note that you need to enable the use of matrix variables. In the MVC Java configuration, you need to set a UrlPathHelper with removeSemicolonContent=false through Path Matching. In the MVC XML namespace, you can set <mvc:annotation-driven enable-matrix-variables="true"/>.
 
-**@RequestParam**
+*@RequestParam*
 
 使用 `@RequestParam` 注解绑定请求参数(query parameters or form data) to a method argument in a controller, example:
 
@@ -607,7 +607,7 @@ multiple parameter values for the same parameter name 的参数可以被定义�
 
 > Note that use of @RequestParam is optional (for example, to set its attributes). By default, any argument that is a simple value type (as determined by BeanUtils#isSimpleProperty) and is not resolved by any other argument resolver, is treated as if it were annotated with @RequestParam.
 
-**@RequestHeader**
+*@RequestHeader*
 
 通过 `@RequestHeader` 注解, bind a request header to method argument in a controller, example:
 
@@ -624,7 +624,7 @@ class T {
 
 同样, 当`@RequestHeader` 用于 `Map<String, String>`, `MultiValueMap<String, String>`, `HttpHeaders` 时, 所有header自动populated.
 
-**@CookieValue**
+*@CookieValue*
 
 `@CookieValue`注解, 用于取cookie的值(auto type conversion) example:
 
@@ -638,7 +638,7 @@ class T {
 }
 ```
 
-**@ModeAttribute**
+*@ModeAttribute*
 
 `@ModeAttribute` 注解可用于 model (fields)自动的data binding, example:
 
@@ -660,15 +660,15 @@ The model `Pet` instance above is resolved as follows:
 
 more info pass
 
-**@SessionAttributes**
+*@SessionAttributes*
 
 pass
 
-**@SessionAttribute**
+*@SessionAttribute*
 
 pass
 
-**Redirect Attributes**
+*Redirect Attributes*
 
 example:
 
@@ -682,13 +682,13 @@ class T {
 }
 ```
 
-**Flash Attributes**
+*Flash Attributes*
 
 Flash attributes provide a way for one request to store attributes that are intended for use in another. 
 
 more info pass
 
-**Multipart**
+*Multipart*
 
 After a MultipartResolver has been enabled, the content of POST requests with multipart/form-data is parsed and accessible as regular request parameters. example:
 
@@ -712,7 +712,7 @@ public class FileUploadController {
 
 more info pass
 
-**@RequestBody**
+*@RequestBody*
 
 You can use the @RequestBody annotation to have the request body read and deserialized into an Object through an HttpMessageConverter. example:
 
@@ -730,11 +730,11 @@ class T {
 }
 ```
 
-**HttpEntity**
+*HttpEntity*
 
 pass
 
-**@ResponseBody**
+*@ResponseBody*
 
 You can use the @ResponseBody annotation on a method to have the return serialized to the response body through an `HttpMessageConverter`. example:
 
@@ -756,7 +756,7 @@ You can use the Message Converters option of the MVC Config to configure or cust
 
 You can combine @ResponseBody methods with JSON serialization views. See Jackson JSON for details.
 
-**ResponseEntity**
+*ResponseEntity*
 
 ResponseEntity is like @ResponseBody but with status and headers. For example:
 
@@ -771,8 +771,386 @@ class T {
 }
 ```
 
-**Jackson JSON**
+*Jackson JSON*
 
 Sprint offers support for the jackson JSON library.
 
+JSON Views example:
 
+```java
+@RestController
+public class UserController {
+
+    @GetMapping("/user")
+    @JsonView(User.WithoutPasswordView.class)
+    public User getUser() {
+        return new User("eric", "7!jd#h23");
+    }
+}
+
+public class User {
+
+    public interface WithoutPasswordView {};
+    public interface WithPasswordView extends WithoutPasswordView {};
+
+    private String username;
+    private String password;
+
+    public User() {
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    @JsonView(WithoutPasswordView.class)
+    public String getUsername() {
+        return this.username;
+    }
+
+    @JsonView(WithPasswordView.class)
+    public String getPassword() {
+        return this.password;
+    }
+}
+```
+
+**Model**
+
+pass
+
+**DataBinder**
+
+pass
+
+**Exception**
+
+`@Controller` and `@ControllerAdvice` classes can have @ExceptionHandler methods to handle exceptions from controller methods, as the following example shows:
+
+```java
+@Controller
+public class SimpleController {
+    // ...
+    @ExceptionHandler
+    public ResponseEntity<String> handle(IOException ex) {
+        // ...
+    }
+
+    @ExceptionHandler({FileSystemException.class, RemoteException.class})
+    public ResponseEntity<String> handle(Exception ex) {
+        // ...
+    }
+}
+```
+
+*Method Arguments*
+
+pass
+
+*Return Values*
+
+pass
+
+*REST API exceptions*
+
+pass
+
+**Controller Advice**
+
+Typically @ExceptionHandler, @InitBinder, and @ModelAttribute methods apply within the @Controller class (or class hierarchy) in which they are declared. If you want such methods to apply more globally (across controllers), you can declare them in a class annotated with @ControllerAdvice or @RestControllerAdvice.
+
+@ControllerAdvice is annotated with @Component, which means such classes can be registered as Spring beans through component scanning. @RestControllerAdvice is a composed annotation that is annotated with both @ControllerAdvice and @ResponseBody, which essentially means @ExceptionHandler methods are rendered to the response body through message conversion (versus view resolution or template rendering).
+
+On startup, the infrastructure classes for @RequestMapping and @ExceptionHandler methods detect Spring beans annotated with @ControllerAdvice and then apply their methods at runtime. 
+
+Global @ExceptionHandler methods (from a @ControllerAdvice) are applied after local ones (from the @Controller). By contrast, global @ModelAttribute and @InitBinder methods are applied before local ones.
+
+By default, @ControllerAdvice methods apply to every request (that is, all controllers), but you can narrow that down to a subset of controllers by using attributes on the annotation, as the following example shows:
+
+example:
+
+```java
+// Target all Controllers annotated with @RestController
+@ControllerAdvice(annotations = RestController.class)
+public class ExampleAdvice1 {}
+
+// Target all Controllers within specific packages
+@ControllerAdvice("org.example.controllers")
+public class ExampleAdvice2 {}
+
+// Target all Controllers assignable to specific classes
+@ControllerAdvice(assignableTypes = {ControllerInterface.class, AbstractController.class})
+public class ExampleAdvice3 {}
+```
+
+4. Functional Endpoints
+
+a lightweight functional programming model in which functions are used to route and handle requests and contracts are designed for immutability. 
+
+more info pass
+
+5. URI Links
+
+some example:
+
+```java
+class T {
+    public static void main(String[] args){
+        UriComponents uriComponents = UriComponentsBuilder
+                .fromUriString("https://example.com/hotels/{hotel}")  
+                .queryParam("q", "{q}")  
+                .encode() 
+                .build(); 
+        
+        URI uri = uriComponents.expand("Westin", "123").toUri(); 
+        
+        URI uri = UriComponentsBuilder
+                .fromUriString("https://example.com/hotels/{hotel}")
+                .queryParam("q", "{q}")
+                .encode()
+                .buildAndExpand("Westin", "123")
+                .toUri();
+        
+        URI uri = UriComponentsBuilder
+                .fromUriString("https://example.com/hotels/{hotel}")
+                .queryParam("q", "{q}")
+                .build("Westin", "123");
+
+        URI uri = UriComponentsBuilder
+                .fromUriString("https://example.com/hotels/{hotel}?q={q}")
+                .build("Westin", "123");
+    }
+}
+```
+
+**UriBuilder**
+
+pass
+
+**URI Encoding**
+
+pass
+
+**Relative Servlet Requests**
+
+pass
+
+**Links to Controllers**
+
+Spring MVC provides a mechanism to prepare links to controller methods. For example, the following MVC controller allows for link creation:
+
+```java
+@Controller
+@RequestMapping("/hotels/{hotel}")
+public class BookingController {
+
+    @GetMapping("/bookings/{booking}")
+    public ModelAndView getBooking(@PathVariable Long booking) {
+        // ...
+    }
+}
+```
+
+You can prepare a link by referring to the method by name, as the following example shows:
+
+```
+UriComponents uriComponents = MvcUriComponentsBuilder
+    .fromMethodName(BookingController.class, "getBooking", 21).buildAndExpand(42);
+
+URI uri = uriComponents.encode().toUri();
+```
+
+more info pass
+
+**Links in Views**
+
+pass
+
+6. Asynchronous Requests
+
+Spring MVC has an extensive integration with Servlet 3.0 asynchronous request processing:
+
+- DeferredResult and Callable return values in controller methods and provide basic support for a single asynchronous return value.
+- Controllers can stream multiple values, including SSE(server send event) and raw data.
+- Controllers can use reactive clients and return reactive types for response handling.
+
+more info pass
+
+7. CORS
+
+Spring MVC lets you handle CORS (Cross-Origin Resource Sharing). This section describes how to do so.
+
+The CORS specification distinguishes between preflight, simple, and actual requests. To learn how CORS works, you can read [this article](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS), among many others, or see the specification for more details.
+
+more info pass
+
+8. Web Security
+
+link to another project [Spring Security](https://spring.io/projects/spring-security)
+
+9. HTTP Caching
+
+HTTP caching can significantly improve the performance of a web application.
+
+HTTP caching 围绕 Cache-Control 相关的请求/响应头上作文章.
+
+**CacheControl**
+
+pass
+
+**Controllers**
+
+pass
+
+**Static Resources**
+
+pass
+
+**ETage Filter**
+
+pass
+
+10. View Technologies
+
+**Jackson**
+
+The MappingJackson2JsonView uses the Jackson library’s ObjectMapper to render the response content as JSON.
+
+MappingJackson2XmlView uses the Jackson XML extension’s XmlMapper to render the response content as XML. 
+
+11. MVC Config
+
+The MVC Java configuration and the MVC XML namespace provide default configuration suitable for most applications and a configuration API to customize it.
+
+**Enable MVC Configuration**
+
+In Java configuration, you can use the @EnableWebMvc annotation to enable MVC configuration, as the following example shows:
+
+```java
+@Configuration
+@EnableWebMvc
+public class WebConfig {
+}
+```
+
+In XML configuration, you can use the <mvc:annotation-driven> element to enable MVC configuration, as the following example shows:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <mvc:annotation-driven/>
+</beans>
+```
+
+**MVC Config API**
+
+In Java configuration, you can implement the `WebMvcConfigurer` interface.
+
+```java
+@Configuration
+@EnableWebMvc
+public class WebConfig implements WebMvcConfigurer {
+
+    // Implement configuration methods...
+}
+```
+
+In XML, you can check attributes and sub-elements of `<mvc:annotation-driven/>`.
+
+12. HTTP/2
+
+pass
+
+### REST Clients
+
+**RestTemplate**
+
+RestTemplate is a synchronous client to perform HTTP requests.
+
+**WebClient**
+
+WebClient is a non-blocking, reactive client to perform HTTP requests.
+
+### Testing
+
+This section summarizes the options available in spring-test for Spring MVC applications.
+
+more info pass.
+
+### WebSockets
+
+This part of the reference documentation covers support for Servlet stack, WebSocket messaging that includes raw WebSocket interactions, WebSocket emulation through SockJS, and publish-subscribe messaging through STOMP as a sub-protocol over WebSocket.
+
+**Introduction to WebSocket**
+
+The WebSocket protocol, [RFC 6455](https://tools.ietf.org/html/rfc6455), provides a standardized way to establish a full-duplex, two-way communication channel between client and server over a single TCP connection. 
+
+It is a different TCP protocol from HTTP but is designed to work over HTTP, using ports 80 and 443 and allowing re-use of existing firewall rules.
+
+A WebSocket interaction begins with an HTTP request that uses the HTTP Upgrade header to upgrade or, in this case, to switch to the WebSocket protocol. The following example shows such an interaction:
+
+```
+GET /spring-websocket-portfolio/portfolio HTTP/1.1
+Host: localhost:8080
+Upgrade: websocket 
+Connection: Upgrade 
+Sec-WebSocket-Key: Uc9l9TMkWGbHFD2qnFHltg==
+Sec-WebSocket-Protocol: v10.stomp, v11.stomp
+Sec-WebSocket-Version: 13
+Origin: http://localhost:8080
+```
+
+Instead of the usual 200 status code, a server with WebSocket support returns output similar to the following:
+
+```
+HTTP/1.1 101 Switching Protocols 
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Accept: 1qVdfYHU9hPOl4JYYNXF623Gzn0=
+Sec-WebSocket-Protocol: v10.stomp
+```
+
+After a successful handshake, the TCP socket underlying the HTTP upgrade request remains open for both the client and the server to continue to send and receive messages.
+
+大体上: WebSocket 协议第一次也是HTTP协议的request, 然后协商升级后续使用WebSocket, 再详情的内容参见 RFC 6455.
+
+**WebSocket API**
+
+pass
+
+**SockJS Fallback**
+
+Over the public Internet, restrictive proxies outside your control may preclude WebSocket interactions, either because they are not configured to pass on the Upgrade header or because they close long-lived connections that appear to be idle.
+
+The solution to this problem is WebSocket emulation — that is, attempting to use WebSocket first and then falling back on HTTP-based techniques that emulate a WebSocket interaction and expose the same application-level API.
+
+On the Servlet stack, the Spring Framework provides both server (and also client) support for the SockJS protocol.
+
+more info pass
+
+**STOMP**
+
+WebSocket 协议定义了2种类型的message(text and binary), 但content is undefined. 在websocket之上协商what kind of messages each can sed, what the format is, the content of each message, and so on.
+
+The use of a sub-protocol is optional but, either way, the client and the server need to agree on some protocol that defines message content.
+
+STOMP (Simple Text Oriented Messaging Protocol) was originally created for scripting languages (such as Ruby, Python, and Perl) to connect to enterprise message brokers. It is designed to address a minimal subset of commonly used messaging patterns. STOMP can be used over any reliable two-way streaming network protocol, such as TCP and WebSocket. Although STOMP is a text-oriented protocol, message payloads can be either text or binary.
+
+more info pass
+
+### Other Web Frameworks
+
+This chapter details Spring’s integration with third-party web frameworks.
+
+One of the core value propositions of the Spring Framework is that of enabling choice. In a general sense, Spring does not force you to use or buy into any particular architecture, technology, or methodology (although it certainly recommends some over others). 
+
+more info pass
