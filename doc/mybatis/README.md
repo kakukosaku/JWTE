@@ -1,5 +1,7 @@
 # MyBatis
 
+Ref: https://mybatis.org/mybatis-3/index.html
+
 ## Overview
 
 MyBatis is a first class persistence framework with support for custom SQL, stored procedures and advanced mappings. MyBatis eliminates almost all of the JDBC code and manual setting of parameters and retrieval of results. MyBatis can use simple XML or Annotations for configuration and map primitives, Map interfaces and Java POJOs (Plain Old Java Objects) to database records.
@@ -7,6 +9,7 @@ MyBatis is a first class persistence framework with support for custom SQL, stor
 - [Getting Started](#getting-started)
 - [Configuration XML](#configuration-xml)
 - [Mapper XML Files](#mapper-xml-files)
+- [Dynamic SQL](#dynamic-sql)
 
 ### Getting Started
 
@@ -806,7 +809,7 @@ When auto-mapping results MyBatis will get the column name and look for a proper
 
 That means that if a column named ID and property named id are found, MyBatis will set the id property with the ID column value.
 
-Usually database columns are named using uppercase letters and underscores between words and java properties often follow the camelcase naming covention. To enable the auto-mapping between them set the setting mapUnderscoreToCamelCase to true.
+Usually database columns are named using uppercase letters and underscores between words and java properties often follow the camelcase naming covention. To enable the auto-mapping between them set the setting `mapUnderscoreToCamelCase` to true.
 
 **cache**
 
@@ -824,3 +827,183 @@ The effect of this one simple statement is as follows:
 - The cache will be treated as a read/write cache, meaning objects retrieved are not shared and can be safely modified by the caller, without interfering with other potential modifications by other callers or threads.
 
 you can custom cache implementation, more info pass.
+
+### Dynamic SQL
+
+- if
+- choose (when, otherwise)
+- trim (where, set)
+- foreach
+
+**if**
+
+```xml
+<select id="findActiveBlogLike" resultType="Blog">
+  SELECT * FROM BLOG WHERE state = ‘ACTIVE’
+  <if test="title != null">
+    AND title like #{title}
+  </if>
+  <if test="author != null and author.name != null">
+    AND author_name like #{author.name}
+  </if>
+</select>
+```
+
+**choose, when, otherwise**
+
+```xml
+<select id="findActiveBlogLike"
+     resultType="Blog">
+  SELECT * FROM BLOG WHERE state = ‘ACTIVE’
+  <choose>
+    <when test="title != null">
+      AND title like #{title}
+    </when>
+    <when test="author != null and author.name != null">
+      AND author_name like #{author.name}
+    </when>
+    <otherwise>
+      AND featured = 1
+    </otherwise>
+  </choose>
+</select>
+```
+
+**trim, where, set**
+
+notorious dynamic SQL challenge: Consider what would happen if we return to our "if" example:
+
+```xml
+<select id="findActiveBlogLike"
+     resultType="Blog">
+  SELECT * FROM BLOG
+  WHERE
+  <if test="state != null">
+    state = #{state}
+  </if>
+  <if test="title != null">
+    AND title like #{title}
+  </if>
+  <if test="author != null and author.name != null">
+    AND author_name like #{author.name}
+  </if>
+</select>
+```
+
+What happen if none of the conditions are met? generated SQL would like: `SELECT * FROM BLOG WHERE`
+
+if only the second condition was met: `SELECT * FROM BLOG WHERE AND title like ‘someTitle’
+`
+this two would be fail! MyBatis solution:
+
+```xml
+<select id="findActiveBlogLike"
+     resultType="Blog">
+  SELECT * FROM BLOG
+  <where>
+    <if test="state != null">
+         state = #{state}
+    </if>
+    <if test="title != null">
+        AND title like #{title}
+    </if>
+    <if test="author != null and author.name != null">
+        AND author_name like #{author.name}
+    </if>
+  </where>
+</select>
+```
+
+If the where element does not behave exactly as you like, you can customize it by defining your own trim element. For example, the trim equivalent to the where element is:
+
+```xml
+<trim prefix="WHERE" prefixOverrides="AND |OR ">
+    <!-- ... -->
+</trim>
+```
+
+dynamic update statements called set:
+
+```xml
+<update id="updateAuthorIfNecessary">
+  update Author
+    <set>
+      <if test="username != null">username=#{username},</if>
+      <if test="password != null">password=#{password},</if>
+      <if test="email != null">email=#{email},</if>
+      <if test="bio != null">bio=#{bio}</if>
+    </set>
+  where id=#{id}
+</update>
+```
+
+**foreach**
+
+```xml
+<select id="selectPostIn" resultType="domain.blog.Post">
+  SELECT *
+  FROM POST P
+  WHERE ID in
+  <foreach item="item" index="index" collection="list"
+      open="(" separator="," close=")">
+        #{item}
+  </foreach>
+</select>
+```
+
+This wraps up the discussion regarding the XML configuration file and XML mapping files. The next section will discuss the Java API in detail, so that you can get the most out of the mappings that you’ve created.
+
+**script**
+
+For using dynamic SQL in annotated mapper class, script element can be used. For example:
+
+```java
+class T {
+    @Update({"<script>",
+      "update Author",
+      "  <set>",
+      "    <if test='username != null'>username=#{username},</if>",
+      "    <if test='password != null'>password=#{password},</if>",
+      "    <if test='email != null'>email=#{email},</if>",
+      "    <if test='bio != null'>bio=#{bio}</if>",
+      "  </set>",
+      "where id=#{id}",
+      "</script>"})
+    void updateAuthorValues(Author author);
+}
+```
+
+**bind**
+
+The bind element lets you create a variable out of an OGNL(Object-Graph Navigation Language) expression and bind it to the context. For example:
+
+```xml
+<select id="selectBlogsLike" resultType="Blog">
+  <bind name="pattern" value="'%' + _parameter.getTitle() + '%'" />
+  SELECT * FROM BLOG
+  WHERE title LIKE #{pattern}
+</select>
+```
+
+**Multi-db vendor support**
+
+If a databaseIdProvider was configured a "_databaseId" variable is available for dynamic code, so you can build different statements depending on database vendor. Have a look at the following example:
+
+```xml
+<insert id="insert">
+  <selectKey keyProperty="id" resultType="int" order="BEFORE">
+    <if test="_databaseId == 'oracle'">
+      select seq_users.nextval from dual
+    </if>
+    <if test="_databaseId == 'db2'">
+      select nextval for seq_users from sysibm.sysdummy1"
+    </if>
+  </selectKey>
+  insert into users values (#{id}, #{name})
+</insert>
+```
+
+**Pluggable Scripting Languages For Dynamic SQL**
+
+pass
+
