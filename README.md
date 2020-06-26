@@ -103,6 +103,16 @@ IOC: Inversion of Control, IOC
 
 JSR: Java Specification Requests, JSR
 
+XML: Extensible Markup Language, XML
+
+DTD: Document Type Definition, DTD
+
+xmlns: xml namespace, xmlns
+
+xsd: xml schema definition, xsd
+
+xsi: xml schema instance, xsi
+
 ### Engineering Problems
 
 Java Economy System, Engineering Problem solution!
@@ -110,3 +120,4 @@ Java Economy System, Engineering Problem solution!
 - [Maven](doc/maven/README.md)
 - [Spring Framework](doc/spring/spring_framework.md)
 - [Spring boot](doc/spring/spring_boot.md)
+- [Mybatis](doc/mybatis/README.md)
