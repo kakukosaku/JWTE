@@ -1,0 +1,26 @@
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!--
+        usage in cmd with mvn:
+        mvn -Dmybatis.generator.overwrite=true -Dmybatis.generator.includeCompileDependencies=true mybatis-generator:generate
+    -->
+    <context id="simple" targetRuntime="MyBatis3Simple">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/employees?useSSL=false"
+                        userId="username"
+                        password="password"
+        />
+
+        <javaModelGenerator targetPackage="com.github.kakukosaku.mybatis.model.generated" targetProject="src/main/java"/>
+
+        <sqlMapGenerator targetPackage="mapper.generated" targetProject="src/main/resources"/>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.github.kakukosaku.mybatis.mapper.generated" targetProject="src/main/java"/>
+
+        <table tableName="conf_relation" >
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+    </context>
+</generatorConfiguration>

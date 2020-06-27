@@ -507,6 +507,3 @@ class T {
 - `@Conditional`
 
 For even more complex conditions, we can create a class evaluating the custom condition. We tell Spring to use this custom condition with @Conditional.
-
-
-
