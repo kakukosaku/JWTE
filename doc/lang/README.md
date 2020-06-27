@@ -4,10 +4,10 @@
 
 Java lang related summary!
 
-- [Access Modifiers](doc/lang#access-modifiers)
-- [Servlet & Servlet Container](doc/lang#servlet--servlet-container)
-- [Java Bean](doc/lang#java-bean)
-- [Glossary](doc/lang#glossary)
+- [Access Modifiers](#access-modifiers)
+- [Servlet & Servlet Container](#servlet--servlet-container)
+- [Java Bean](#java-bean)
+- [Glossary](#glossary)
 
 ### Access Modifiers
 
@@ -89,6 +89,73 @@ javaBean 只是一个标准, 它满足:
 3. Implements Serializable interface.
 
 That's it. It's just a convention. Lots of libraries depend on it though.
+
+### Annotation
+
+ref: https://docs.oracle.com/javase/tutorial/java/annotations/index.html
+
+Annotations, a form of metadata, provide data about a program that is not part of the program itself. Annotations have no direct effect on the operation of the code they annote.
+
+Annotations have a number of uses, among them:
+
+- Information for the compiler - Annotations can be used by the compiler to detect errors or suppress warnings.
+- Compile-time and deployment-time processing - Software tools can precess annotation information to generate code, XML files, and so forth.
+- Runtime processing - Some annotations are available to be examined at runtime.
+
+使用形式:
+
+```java
+class T {
+    @Override
+    public static void testMethod() {
+    }
+}
+```
+
+可以使用在多种code elements; 可以有参数 `@Bean(name = "beanName")`; 没有可以省略 `@Bean`;
+
+**Predefined annotation types:**
+
+`@Deprecated`, `@Override`, `@SuppressWarnings`, `@SafeVarargs`, `@FunctionalInterface`
+
+**Annotations that apply to other annotations:**
+
+可用于其它注解的注解称为元注解(called meta-annotations), There are several meta-annotation types defined in `java.lang.annotation`.
+
+- `@Retention`: specifies how the marked annotation is stored:
+    - RetentionPolicy.SOURCE - the marked annotation is retained only in the source level and is ignored by the compiler.
+    - RetentionPolicy.CLASS - the marked annotation is retained by the compiler at compile time, but is ignored by the Virtual Machine(JVM).
+    - RetentionPolicy.RUNTIME - the marked annotation is retained by the JVM so it can be used by the runtime environment.
+    
+- `@Documented` 指明注解(被`@Documented`修饰的注解)是否应该被javadoc tool 解析(documented), 默认javadoc tool不解析注解.
+- `@Target` 标记注解使用范围(what kind of java elements the annotation can be applied to.) A target annotation specifies one of the following element types as its value:
+    - ElementType.ANNOTATION_TYPE can be applied to an annotation type.
+    - ElementType.CONSTRUCTOR can be applied to a constructor.
+    - ElementType.FIELD can be applied to field or property.
+    - ElementType.LOCAL_VARIABLE
+    - ElementType.METHOD
+    - ElementType.PACKAGE
+    - ElementType.PARAMETER
+    - ElementType.Type
+    - feature version Java introduce more, such as: TYPE_PARAMETER, TYPE_USE, MODULE
+
+- `@Interited` 指明注解can be inherited from the super class.
+- `@Repeatable` 指明注解can be applied more than once to the same declaration or type use.
+
+**Type annotation and Pluggable type systems**
+
+Before the Java SE 8 release, annotations could only be applied to declarations.
+As of the Java SE 8 release, annotations can also be applied to any type use. This means that annotations can be used anywhere you use a type.
+A few examples of where types are used are class instance creation expressions (new), casts, implements clauses, and throws clauses.
+This form of annotation is called a **type annotation** and several examples are provided in [Annotations Basics](https://docs.oracle.com/javase/tutorial/java/annotations/basics.html).
+
+For example:
+
+`@NotNull String name;`
+
+**Repeating Annotations**
+
+more info pass
 
 ### Glossary
 
