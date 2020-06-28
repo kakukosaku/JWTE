@@ -29,7 +29,9 @@ public class AllLogAnnotationAdvice {
         List<Object> args = Arrays.asList(joinPoint.getArgs());
 
         String logInfoText = "before log: " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-        logInfoText += " " + args.get(0).toString() + " view " + args.get(1).toString();
+        if (args.size() > 0) {
+            logInfoText += " " + args.get(0).toString() + " view " + args.get(1).toString();
+        }
 
         System.out.println(logInfoText);
     }
@@ -39,7 +41,9 @@ public class AllLogAnnotationAdvice {
         List<Object> args = Arrays.asList(joinPoint.getArgs());
 
         String logInfoText = "after log: " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-        logInfoText += " " + args.get(0).toString() + " view " + args.get(1).toString();
+        if (args.size() > 0) {
+            logInfoText += " " + args.get(0).toString() + " view " + args.get(1).toString();
+        }
 
         System.out.println(logInfoText);
     }

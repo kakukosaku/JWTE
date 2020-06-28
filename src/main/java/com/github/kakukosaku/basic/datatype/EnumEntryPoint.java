@@ -6,7 +6,7 @@ package com.github.kakukosaku.basic.datatype;
  * @author kaku
  * Date    2020/6/25
  */
-public enum EnumDemo {
+public enum EnumEntryPoint {
     Phone("手机") {
         @Override
         String getSize() {
@@ -34,7 +34,7 @@ public enum EnumDemo {
 
     private final String translation;
 
-    EnumDemo(String translation) {
+    EnumEntryPoint(String translation) {
         this.translation = translation;
     }
 
@@ -45,7 +45,7 @@ public enum EnumDemo {
     }
 
     public static void main(String[] args) {
-        for (EnumDemo e : EnumDemo.values()) {
+        for (EnumEntryPoint e : EnumEntryPoint.values()) {
             System.out.println(e + " " + e.getTranslation());
         }
     }

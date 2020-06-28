@@ -6,7 +6,7 @@ package com.github.kakukosaku.basic.datatype;
  * @author kaku
  * Date    2020/5/24
  */
-public class Basic {
+public class BasicEntryPoint {
 
     public static <T> void p(T v) {
         System.out.printf("typeOf(%s):\t%s\n", v, v.getClass().getSimpleName());

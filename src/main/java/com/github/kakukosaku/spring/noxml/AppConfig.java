@@ -28,7 +28,7 @@ public class AppConfig {
         ctx.register(AppConfig.class);
         ctx.refresh();
         Hello hi = (Hello) ctx.getBean("getGreetTool");
-        hi.greet();
+        hi.greet("name-passed-by-ref");
     }
 
 }
@@ -38,7 +38,6 @@ class Hello {
 
     private String name;
 
-    @Autowired
     public void setName(@Value("kaku-default-name") String name) {
         this.name = name;
     }
@@ -51,7 +50,7 @@ class Hello {
         System.out.println("Hello init method is invoked!");
     }
 
-    public void greet() {
+    public void greet(String name) {
         System.out.println("Hi, " + name + " from bean...");
     }
 }

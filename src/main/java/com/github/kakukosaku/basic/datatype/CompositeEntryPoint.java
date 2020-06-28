@@ -1,12 +1,15 @@
 package com.github.kakukosaku.basic.datatype;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Description
  *
  * @author kaku
  * Date    2020/5/25
  */
-public class Composite {
+public class CompositeEntryPoint {
 
     public static void p(char[] v) {
         System.out.println(v);

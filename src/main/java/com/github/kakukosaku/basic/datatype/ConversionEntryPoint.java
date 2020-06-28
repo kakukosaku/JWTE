@@ -10,7 +10,7 @@ import java.util.Date;
  * @author kaku
  * Date    2020/5/26
  */
-public class Conversion {
+public class ConversionEntryPoint {
 
     public static void main(String[] args) {
         // String to int

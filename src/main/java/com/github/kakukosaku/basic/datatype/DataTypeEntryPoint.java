@@ -1,10 +1,8 @@
-package com.github.kakukosaku.datatype;
+package com.github.kakukosaku.basic.datatype;
 
 import com.github.kakukosaku.util.Display;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Queue;
 
 /**
  * Description
@@ -12,7 +10,7 @@ import java.util.Queue;
  * @author kaku
  * @date 2020-01-12
  */
-public class DataType<T> {
+public class DataTypeEntryPoint<T> {
 
     T t;
 
@@ -47,7 +45,7 @@ public class DataType<T> {
         Display.displayArray(charArray);
 
         // generic type
-        DataType<String> d = new DataType<>();
+        DataTypeEntryPoint<String> d = new DataTypeEntryPoint<>();
         d.t = "kaku";
         System.out.println(d.t);
 

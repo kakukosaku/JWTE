@@ -6,7 +6,7 @@ package com.github.kakukosaku.basic.controlflow;
  * @author kaku
  * Date    2020/5/25
  */
-public class ControlStatements {
+public class ControlFlowEntryPoint {
 
     public static void main(String[] args) {
         // if

@@ -12,10 +12,10 @@ import java.util.concurrent.ConcurrentHashMap;
 class CollectionExampleBase {
 }
 
-class CollectionExampleChild extends CollectionExample {
+class CollectionExampleChild extends CollectionEntryPoint {
 }
 
-public class CollectionExample extends CollectionExampleBase {
+public class CollectionEntryPoint extends CollectionExampleBase {
 
     public static <E> void p(E[] arr) {
         System.out.print("[");
@@ -122,11 +122,11 @@ public class CollectionExample extends CollectionExampleBase {
         //  2.2 extends 能保证集合中的元素的类型 extends 自 Number(有可能为Integer, Double, 所以无法确定具体是什么, 但至少是Number), 也可以是Object
         //  2.3 所以说 extends 子类型的信息丢失了
         // 3. 不能添加元素, 但可添加 `null`.
-        List<? extends CollectionExample> listExtendsCollectionExample = new ArrayList<>();
+        List<? extends CollectionEntryPoint> listExtendsCollectionExample = new ArrayList<>();
         // Compile error, can add element except null!
         // listExtendsCollectionExample.add(new CollectionExample());
         listExtendsCollectionExample.add(null);
-        CollectionExample c = listExtendsCollectionExample.get(0);
+        CollectionEntryPoint c = listExtendsCollectionExample.get(0);
         System.out.println(c);
         p(listExtendsCollectionExample);
 
@@ -139,12 +139,12 @@ public class CollectionExample extends CollectionExampleBase {
         //  2.2 super 能保证集合中的元素的类型, 是 `Integer` 的 superclass, 但具体是哪一个不知道
         //  2.3 所以说, 不用来取元素一般
         // 3. 可以添加元素, 但只能为 T本身或T的子类的对象.
-        List<? super CollectionExample> listSuperCollectionExample = new ArrayList<>();
-        listSuperCollectionExample.add(new CollectionExample());
+        List<? super CollectionEntryPoint> listSuperCollectionExample = new ArrayList<>();
+        listSuperCollectionExample.add(new CollectionEntryPoint());
         Object c2 = listSuperCollectionExample.get(0);
         p(listSuperCollectionExample);
         System.out.println(c2);
-        CollectionExample c3 = (CollectionExample) c2;
+        CollectionEntryPoint c3 = (CollectionEntryPoint) c2;
         System.out.println(c3);
 
     }
