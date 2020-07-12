@@ -5,6 +5,7 @@
 Java lang related summary!
 
 - [Access Modifiers](#access-modifiers)
+- [Java lambda & Method reference](#java-lambda--method-reference)
 - [Servlet & Servlet Container](#servlet--servlet-container)
 - [Java Bean](#java-bean)
 - [Glossary](#glossary)
@@ -28,6 +29,33 @@ default +允许包内访问;
 protect +包外子类访问;
 
 public 都能访问.
+
+### Java lambda & Method reference
+
+**Lambda expression**
+
+A Java *lambda expression* is an anonymous (that is, unnamed) method that can be created without belonging to any class.
+
+Instead, it is used to implement a method defined by a function interface (this interface contains one — and only one — abstract method but also can contain multiple default and static methods).
+
+Thus, a lambda expression results in a form of anonymous class.
+
+**Method reference**
+
+*Method reference* is an important feature related to lambda expressions, which can let you reuse existing method definitions and pass them just like lambda expressions. It has the syntax form of:
+
+```
+Object::methodName
+```
+
+There are four types of method references:
+
+| Type                          | Syntax                        | Lambda        
+|-------------------------------|-------------------------------|-------------------------------------------------------
+| Reference to a static method  | ClassName::staticMethodName   | (args) -> ClassName.staticMethodName(args)
+| Reference to an instance method of an existing object | object::instanceMethodName | (args) -> object.instanceMethodName(args)
+| Reference to an instance method of an arbitrary object of a particular type | ClassName::instanceMethodName | (arg0,rest) -> arg0.instanceMethodName(rest) note: arg0 is of type ClassName 
+| Reference to a constructor    | ClassName::new | (args) -> new ClassName(args) 
 
 ### Servlet & Servlet Container
 
