@@ -1,6 +1,7 @@
 package com.github.kakukosaku.basic.interfaces;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -9,6 +10,8 @@ import java.util.List;
  *
  * @author kaku
  * Date    2020/5/27
+ * <p>
+ * Compareable interface for the object that your wirte!
  */
 class People implements Comparable<People> {
 
@@ -43,6 +46,10 @@ class People implements Comparable<People> {
         People p1 = new People(18);
         People p2 = new People(20);
 
+        People[] ps = new People[]{p2, p1, p2};
+        Arrays.sort(ps);
+        System.out.println(Arrays.toString(ps));
+
         List<People> peopleList = new ArrayList<>();
         peopleList.add(p2);
         peopleList.add(p1);
@@ -55,10 +62,19 @@ class People implements Comparable<People> {
 
 }
 
+/**
+ * Description
+ *
+ * @author kaku
+ * Date    2020/5/27
+ * <p>
+ * Comparator interface for the object that out of you control!
+ */
 class PeopleComparator implements Comparator<People> {
 
     @Override
     public int compare(People o1, People o2) {
         return o1.compareTo(o2);
     }
+
 }
