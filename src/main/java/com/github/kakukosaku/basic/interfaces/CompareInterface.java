@@ -1,9 +1,6 @@
 package com.github.kakukosaku.basic.interfaces;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Description
@@ -58,6 +55,13 @@ class People implements Comparable<People> {
         peopleList.sort(new PeopleComparator());
         // peopleList.sort(People::compareTo);
         System.out.println(peopleList);
+
+        Map<Integer, String> m = new HashMap<>();
+        m.put(1, "kaku");
+        System.out.println(m);
+        m.merge(1, "default", (oldValue, newValue) -> oldValue + " " + newValue);
+        m.merge(2, "default", (oldValue, newValue) -> oldValue + " " + newValue);
+        System.out.println(m);
     }
 
 }

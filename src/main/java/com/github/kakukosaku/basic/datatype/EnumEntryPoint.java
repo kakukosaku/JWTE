@@ -44,9 +44,15 @@ public enum EnumEntryPoint {
         return this.translation;
     }
 
+    @Override
+    public String toString() {
+        return "EnumEntryPoint{" + "translation='" + translation + '\'' + '}';
+    }
+
     public static void main(String[] args) {
         for (EnumEntryPoint e : EnumEntryPoint.values()) {
-            System.out.println(e + " " + e.getTranslation());
+            System.out.println(e.ordinal() + " " + e);
+            System.out.println("Size: " + e.getSize() + "Translation: " + e.getTranslation());
         }
     }
 }
