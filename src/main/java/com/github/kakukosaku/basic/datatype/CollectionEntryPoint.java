@@ -9,13 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author kaku
  * Date    2020/5/24
  */
-class CollectionExampleBase {
-}
-
-class CollectionExampleChild extends CollectionEntryPoint {
-}
-
-public class CollectionEntryPoint extends CollectionExampleBase {
+public class CollectionEntryPoint {
 
     public static <E> void p(E[] arr) {
         System.out.print("[");
