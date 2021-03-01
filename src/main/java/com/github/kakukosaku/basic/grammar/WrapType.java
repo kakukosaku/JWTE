@@ -20,10 +20,10 @@ public class WrapType {
         System.out.println(i3.equals(i4));
 
         boolean b = Integer.valueOf(1).equals(1);
+        System.out.println(b);
 
         String s1 = "Hello";
         for (int i = 0; i < 5; i++) {
-
             s1 += " world";
         }
         System.out.println(s1);

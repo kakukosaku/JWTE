@@ -1,4 +1,4 @@
-package com.github.kakukosaku.basic.datatype;
+package com.github.kakukosaku.basic.grammar;
 
 
 /**
