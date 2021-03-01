@@ -132,7 +132,7 @@ public class CollectionEntryPoint {
         //  2.1 super 限制类型下界
         //  2.2 super 能保证集合中的元素的类型, 是 `Integer` 的 superclass, 但具体是哪一个不知道
         //  2.3 所以说, 不用来取元素一般
-        // 3. 可以添加元素, 但只能为 T本身或T的子类的对象.
+        // 3. 可以添加元素, 但只能为 T本身或T的父类的对象.
         List<? super CollectionEntryPoint> listSuperCollectionExample = new ArrayList<>();
         listSuperCollectionExample.add(new CollectionEntryPoint());
         Object c2 = listSuperCollectionExample.get(0);
@@ -140,6 +140,9 @@ public class CollectionEntryPoint {
         System.out.println(c2);
         CollectionEntryPoint c3 = (CollectionEntryPoint) c2;
         System.out.println(c3);
+
+        // 总结: PECS
+        // Producer Extends, Consumer Super
 
     }
 
