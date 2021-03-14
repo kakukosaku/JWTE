@@ -42,7 +42,7 @@ class Job {
             Schedules schedules = m.getAnnotation(Schedules.class);
             System.out.println(Arrays.toString(schedules.value()));
 
-            Method m2 = c.getMethod("doPeriodicTask2");
+            Method m2 = Job.class.getMethod("doPeriodicTask2");
             Schedule schedule = m2.getAnnotation(Schedule.class);
             if (schedule != null) {
                 System.out.println(schedule.dayOfMonth() + schedule.dayOfWeek() + schedule.hour());
