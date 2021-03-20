@@ -39,6 +39,7 @@ public class SpecialMethods implements Cloneable {
      * @deprecated This method is deprecated =,-
      */
     @Override
+    @Deprecated
     protected void finalize() throws Throwable {
         super.finalize();
     }

@@ -1,26 +1,26 @@
 package com.github.kakukosaku.basic.abstractCls;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public interface Car {
-    void run();
+    Car run();
 
-    void stop();
+    Car stop();
 
-    void echo();
+    Car echo();
 }
 
 abstract class SUVCar implements Car {
 
     @Override
-    public void run() {
+    public Car run() {
         System.out.println("start running!");
+        return this;
     }
 
     @Override
-    public void stop() {
+    public Car stop() {
         System.out.println("stopped!");
+        return this;
     }
 
 }
@@ -28,12 +28,14 @@ abstract class SUVCar implements Car {
 class SuzukiCar extends SUVCar {
 
     @Override
-    public void echo() {
+    public Car echo() {
         System.out.println("biu~ from suzuki!");
+        return this;
     }
 
     public static void main(String[] args) {
-        Map<Integer, String> m = new HashMap<>();
+        Car c = new SuzukiCar();
+        c.run().stop().echo();
     }
 
 }
