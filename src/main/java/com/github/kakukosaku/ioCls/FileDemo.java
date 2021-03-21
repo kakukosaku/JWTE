@@ -1,4 +1,4 @@
-package com.github.kakukosaku.ioutil;
+package com.github.kakukosaku.ioCls;
 
 import java.io.*;
 import java.util.Arrays;
