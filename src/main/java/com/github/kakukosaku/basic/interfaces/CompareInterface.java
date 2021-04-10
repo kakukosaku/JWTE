@@ -45,6 +45,8 @@ class People implements Comparable<People> {
 
         People[] ps = new People[]{p2, p1, p2};
         Arrays.sort(ps);
+        // another impl
+        // Arrays.sort(ps, new PeopleComparator());
         System.out.println(Arrays.toString(ps));
 
         List<People> peopleList = new ArrayList<>();

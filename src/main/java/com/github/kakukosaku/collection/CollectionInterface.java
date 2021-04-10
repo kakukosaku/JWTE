@@ -84,6 +84,32 @@ public class CollectionInterface {
                 it.remove();
             }
         }
+
+        // Collections operation
+        Collections.sort(l, Collections.reverseOrder());
+        Collections.reverse(l);
+        System.out.println(l);
+
+        Integer[] arr3 = new Integer[]{1, 2, 3, 4, 5};
+        Arrays.sort(arr3, Collections.reverseOrder());
+        System.out.println(Arrays.toString(arr3));
+
+        // List.sublist
+        System.out.println("list subList:");
+        System.out.println(l);
+        l.subList(0, l.size());
+        System.out.println("list subList changed, original one:");
+        System.out.println(l);
+
+        // SortedSet & SortedMap
+        SortedSet<Integer> sortedSet = new TreeSet<>();
+        SortedMap<String, Integer> sortedMap = new TreeMap<>(map);
+        System.out.println("sortedMap travel:");
+        for (var iterator = sortedMap.keySet().iterator(); iterator.hasNext(); ) {
+            var k = iterator.next();
+            System.out.println("sortedMap key:" + k + "\t" + "value:" + sortedMap.get(k));
+        }
+
     }
 
 }
