@@ -110,6 +110,9 @@ public class CollectionInterface {
             System.out.println("sortedMap key:" + k + "\t" + "value:" + sortedMap.get(k));
         }
 
+        // 计算
+        System.out.println(Integer.numberOfLeadingZeros(4 - 1));
+        System.out.println(-1 >>> Integer.numberOfLeadingZeros(4 - 1));
     }
 
 }
